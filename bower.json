@@ -8,6 +8,7 @@
     "gold-elements": "PolymerElements/gold-elements#1.0.1",
     "google-map": "GoogleWebComponents/google-map#1.0.2",
     "neon-elements": "PolymerElements/neon-elements#1.0.0",
+    "geo-location": "ebidel/geo-location",
     "page": "visionmedia/page.js#~1.6.3"
   },
   "devDependencies": {
