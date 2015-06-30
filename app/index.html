@@ -132,58 +132,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                 </paper-material>
 
                             </paper-button>
-
-                            <paper-dialog id="survey" role="dialog" tabindex="-1" aria-modal="false" class="x-scope paper-dialog-0" aria-labelledby="paper-dialog-header-210" style="outline: none; box-sizing: border-box; position: fixed; z-index: 12; top: 135px; left: 12px; max-height: 344.78125px; max-width: 536px;">
-
-                                <h2 id="paper-dialog-header-210">Dialog Title</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                <div class="buttons">
-                                    <paper-button role="button" tabindex="0" aria-disabled="false" class="x-scope paper-button-0">
-
-                                        <paper-ripple class="style-scope paper-button">
-                                            <div id="background" class="style-scope paper-ripple"></div>
-                                            <div id="waves" class="style-scope paper-ripple"></div>
-                                        </paper-ripple>
-
-                                        <paper-material animated="" class="content  style-scope paper-button x-scope paper-material-0" elevation="0">
-
-                                            More Info...
-
-                                        </paper-material>
-
-                                    </paper-button>
-                                    <paper-button dialog-dismiss="" role="button" tabindex="0" aria-disabled="false" class="x-scope paper-button-0">
-
-                                        <paper-ripple class="style-scope paper-button">
-                                            <div id="background" class="style-scope paper-ripple" style="opacity: 0.00121440000002621;"></div>
-                                            <div id="waves" class="style-scope paper-ripple"></div>
-                                        </paper-ripple>
-
-                                        <paper-material animated="" class="content  style-scope paper-button x-scope paper-material-0" elevation="0">
-
-                                            Decline
-
-                                        </paper-material>
-
-                                    </paper-button>
-                                    <paper-button dialog-confirm="" autofocus="" role="button" tabindex="0" aria-disabled="false" class="x-scope paper-button-0">
-
-                                        <paper-ripple class="style-scope paper-button">
-                                            <div id="background" class="style-scope paper-ripple" style="opacity: 0.0099664000001212;"></div>
-                                            <div id="waves" class="style-scope paper-ripple"></div>
-                                        </paper-ripple>
-
-                                        <paper-material animated="" class="content  style-scope paper-button x-scope paper-material-0" elevation="0">
-
-                                            Accept
-
-                                        </paper-material>
-
-                                    </paper-button>
-                                </div>
-
-                            </paper-dialog>
-
                             <p class="paper-font-subhead">You now have:</p>
                             <my-list></my-list>
 
@@ -266,6 +214,83 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
         </paper-header-panel>
     </paper-drawer-panel>
+
+    <paper-dialog id="survey" role="dialog" tabindex="-1" aria-modal="false" with-backdrop=""
+                  entry-animation="scale-up-animation" exit-animation="fade-out-animation"
+                  class="x-scope paper-dialog-0" aria-labelledby="paper-dialog-header-210"
+                  style="outline: none; box-sizing: border-box; position: fixed; z-index: 12; max-width: 536px;">
+
+        <h2 id="paper-dialog-header-210">What is your favorite color?</h2>
+
+
+
+        <p>
+            <my-questionnaire></my-questionnaire>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+            irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+            deserunt mollit anim id est laborum.</p>
+
+        <div class="buttons">
+            <paper-button role="button" tabindex="0" aria-disabled="false"
+                          class="x-scope paper-button-0">
+
+                <paper-ripple class="style-scope paper-button">
+                    <div id="background" class="style-scope paper-ripple"></div>
+                    <div id="waves" class="style-scope paper-ripple"></div>
+                </paper-ripple>
+
+                <paper-material animated=""
+                                class="content  style-scope paper-button x-scope paper-material-0"
+                                elevation="0">
+
+                    More Info...
+
+                </paper-material>
+
+            </paper-button>
+            <paper-button dialog-dismiss="" role="button" tabindex="0" aria-disabled="false"
+                          class="x-scope paper-button-0">
+
+                <paper-ripple class="style-scope paper-button">
+                    <div id="background" class="style-scope paper-ripple"
+                         style="opacity: 0.00121440000002621;"></div>
+                    <div id="waves" class="style-scope paper-ripple"></div>
+                </paper-ripple>
+
+                <paper-material animated=""
+                                class="content  style-scope paper-button x-scope paper-material-0"
+                                elevation="0">
+
+                    Decline
+
+                </paper-material>
+
+            </paper-button>
+            <paper-button dialog-confirm="" autofocus="" role="button" tabindex="0"
+                          aria-disabled="false" class="x-scope paper-button-0">
+
+                <paper-ripple class="style-scope paper-button">
+                    <div id="background" class="style-scope paper-ripple"
+                         style="opacity: 0.0099664000001212;"></div>
+                    <div id="waves" class="style-scope paper-ripple"></div>
+                </paper-ripple>
+
+                <paper-material animated=""
+                                class="content  style-scope paper-button x-scope paper-material-0"
+                                elevation="0">
+
+                    Accept
+
+                </paper-material>
+
+            </paper-button>
+        </div>
+
+    </paper-dialog>
+
 
 </template>
 
