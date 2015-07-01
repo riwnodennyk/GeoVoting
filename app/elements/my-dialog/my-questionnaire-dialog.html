@@ -1,0 +1,88 @@
+<dom-module id="my-questionnaire-dialog">
+    <!--<style>-->
+    <!--:host {-->
+    <!--display: block;-->
+    <!--}-->
+    <!--</style>-->
+    <geo-location latitude="{{lat}}"
+                  longitude="{{lng}}"></geo-location>
+    <template>
+        <paper-dialog id="dialogg" role="dialog" tabindex="-1" aria-modal="false" with-backdrop=""
+                      entry-animation="scale-up-animation" exit-animation="fade-out-animation"
+                      class="x-scope paper-dialog-0" aria-labelledby="paper-dialog-header-210"
+                      style="outline: none; box-sizing: border-box; position: fixed; z-index: 12; max-width: 536px;">
+
+            <h2 id="paper-dialog-header-210">What is your favorite color?</h2>
+
+            <p>
+                <my-questionnaire id="questionnaire"></my-questionnaire>
+            </p>
+
+            <div class="buttons">
+                <paper-button dialog-dismiss="" role="button" tabindex="0" aria-disabled="false"
+                              class="x-scope paper-button-0">
+
+
+                    <paper-ripple class="style-scope paper-button">
+                        <div id="background" class="style-scope paper-ripple"
+                             style="opacity: 0.00121440000002621;"></div>
+                        <div id="waves" class="style-scope paper-ripple"></div>
+                    </paper-ripple>
+
+                    <paper-material animated=""
+                                    class="content  style-scope paper-button x-scope paper-material-0"
+                                    elevation="0">
+
+                        Cancel
+
+                    </paper-material>
+
+                </paper-button>
+                <paper-button dialog-confirm="" role="button" tabindex="0"
+                              aria-disabled="false"
+                              class="x-scope paper-button-0" on-click="vote">
+
+
+                    <paper-ripple class="style-scope paper-button">
+                        <div id="background" class="style-scope paper-ripple"
+                             style="opacity: 0.0099664000001212;"></div>
+                        <div id="waves" class="style-scope paper-ripple"></div>
+                    </paper-ripple>
+
+                    <paper-material animated=""
+                                    class="content  style-scope paper-button x-scope paper-material-0"
+                                    elevation="0">
+                        <iron-icon icon="check"></iron-icon>
+
+                        Vote
+
+                    </paper-material>
+
+                </paper-button>
+            </div>
+
+        </paper-dialog>
+    </template>
+
+</dom-module>
+<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+<script>
+    (function () {
+        Polymer({
+            is: 'my-questionnaire-dialog',
+            vote: function (e) {
+                if (navigator.geolocation) {
+                    var selected = this.$.questionnaire.$.optionsRadioGroup.selected;
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        var myDataRef = new Firebase('https://geovoting.firebaseio.com/questions/how%20old/' + selected);
+                        var vote = {};
+                        vote.lat = position.coords.latitude;
+                        vote.lon = position.coords.longitude;
+                        myDataRef.push(vote);
+                    });
+                }
+
+            }
+        });
+    })();
+</script>

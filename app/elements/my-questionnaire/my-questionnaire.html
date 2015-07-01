@@ -6,18 +6,19 @@
     <!--</style>-->
     <template>
         <firebase-collection
-                order-by-child="height"
                 location="https://geovoting.firebaseio.com/questions/how%20old"
-                data="{{dinosaurs}}"></firebase-collection>
+                data="{{options}}"></firebase-collection>
         <div class="horizontal-section">
-
-            <paper-radio-group>
-                <template is="dom-repeat" items="[[dinosaurs]]" as="dinosaur">
-                    <paper-radio-button name="[[dinosaur.value]]">[[dinosaur.value]]</paper-radio-button>
+            <paper-radio-group  id="optionsRadioGroup">
+                <template  is="dom-repeat" items="[[options]]" >
+                    <paper-radio-button name="[[item.__firebaseKey__]]">
+                        <span>{{item.__firebaseKey__}}</span>
+                    </paper-radio-button>
                 </template>
             </paper-radio-group>
         </div>
     </template>
+
 </dom-module>
 <script>
     (function () {
