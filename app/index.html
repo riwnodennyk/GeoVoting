@@ -110,18 +110,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                     <section data-route="home">
                         <paper-material elevation="1">
-                            <geo-location latitude="{{lat}}" longitude="{{lng}}"></geo-location>
-                            <google-map latitude="{{lat}}" longitude="{{lng}}" zoom="3"
-                                        showcentermarker>
-                                <firebase-collection
-                                        location="https://geovoting.firebaseio.com/questions/how%20old"
-                                        data="{{ages}}"></firebase-collection>
-                                <template is="dom-repeat" items="[[ages]]" as="age">
-                                    <template is="dom-repeat" items="{{age}}" as="answer">
-                                        <google-map-marker latitude="{{answer.lat}}" longitude="{{answer.lon}}"></google-map-marker>
-                                    </template>
-                                </template>
-                            </google-map>
+                            <answers-map></answers-map>
 
 
                             <paper-button onclick="document.getElementById('survey').$.dialogg.open();"

@@ -9,8 +9,8 @@
                 location="https://geovoting.firebaseio.com/questions/how%20old"
                 data="{{options}}"></firebase-collection>
         <div class="horizontal-section">
-            <paper-radio-group  id="optionsRadioGroup">
-                <template  is="dom-repeat" items="[[options]]" >
+            <paper-radio-group id="optionsRadioGroup">
+                <template is="dom-repeat" items="[[options]]">
                     <paper-radio-button name="[[item.__firebaseKey__]]">
                         <span>{{item.__firebaseKey__}}</span>
                     </paper-radio-button>
