@@ -5,9 +5,9 @@
     <!--}-->
     <!--</style>-->
     <template>
-        <geo-location latitude="{{user-lat}}" longitude="{{user-lon}}"></geo-location>
-        <google-map latitude="{{user-lat}}" longitude="{{user-lon}}" zoom="3"
-                    showcentermarker>
+        <!--<geo-location latitude="{{user-lat}}" longitude="{{user-lon}}"></geo-location>-->
+        <google-map latitude="40" longitude="0" zoom="2"
+                    >
             <firebase-collection
                     location="https://geovoting.firebaseio.com/questions/how%20old"
                     data="{{responses}}"></firebase-collection>
@@ -20,7 +20,7 @@
                             icon='{{  pinSymbol(responses.length,responseIndex)  }}'
                             >
                         <!--pinSymbol("#f0f")-->
-                        <span>{{age.__firebaseKey__}}</span>
+                        <span>{{response.__firebaseKey__}}</span>
                     </google-map-marker>
                 </template>
             </template>

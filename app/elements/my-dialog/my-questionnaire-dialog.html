@@ -76,8 +76,11 @@
                     navigator.geolocation.getCurrentPosition(function (position) {
                         var myDataRef = new Firebase('https://geovoting.firebaseio.com/questions/how%20old/' + selected);
                         var vote = {};
-                        vote.lat = position.coords.latitude;
-                        vote.lon = position.coords.longitude;
+                        vote.lat = -20 + Math.random() * 80;
+                        vote.lon = -140 + Math.random() * 300;
+//                        vote.lat = position.coords.latitude;
+//                        vote.lon = position.coords.longitude;
+                        //todo uncomment for production
                         myDataRef.push(vote);
                     });
                 }
