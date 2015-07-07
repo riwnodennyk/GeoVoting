@@ -39,24 +39,18 @@
             pinSymbol: function (totalColors, colorIndex) {
                 return {
                     path: 'm -8 -10 a 10 10, 0, 1, 0, -13 0 l 18 10 z',
-                    fillColor: this.randomColors(totalColors)[colorIndex],
+                    fillColor: this.contrastColors(totalColors)[colorIndex],
                     fillOpacity: 1,
                     strokeColor: '#000',
                     strokeWeight: 0,
-                    width: 55,
-                    height: 55,
-                    shadow_width: 100,
-                    shadow_height: 100,
-                    marker_anchor: [50, 50],
                     scale: 1
                 };
             },
-            randomColors: function (total) {
+            contrastColors: function (total) {
                 var i = 360 / (total - 1); // distribute the colors evenly on the hue range
                 var r = [];
                 for (var x = 0; x < total; x++) {
                     var items = this.hsvToRgb(i * x, 100, 100);
-                    console.log('return ' + items);
                     r.push(items); // you can also alternate the saturation and value for even more contrast between the colors
                 }
                 return r;

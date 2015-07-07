@@ -40,7 +40,7 @@
                 </paper-button>
                 <paper-button dialog-confirm="" role="button" tabindex="0"
                               aria-disabled="false"
-                              class="x-scope paper-button-0" on-click="vote">
+                              class="x-scope paper-button-0" on-click="authAndVote">
 
 
                     <paper-ripple class="style-scope paper-button">
@@ -70,21 +70,37 @@
     (function () {
         Polymer({
             is: 'my-questionnaire-dialog',
-            vote: function (e) {
+            authAndVote: function (e) {
                 if (navigator.geolocation) {
-                    var selected = this.$.questionnaire.$.optionsRadioGroup.selected;
-                    navigator.geolocation.getCurrentPosition(function (position) {
-                        var myDataRef = new Firebase('https://geovoting.firebaseio.com/questions/how%20old/' + selected);
-                        var vote = {};
-                        vote.lat = -20 + Math.random() * 80;
-                        vote.lon = -140 + Math.random() * 300;
-//                        vote.lat = position.coords.latitude;
-//                        vote.lon = position.coords.longitude;
-                        //todo uncomment for production
-                        myDataRef.push(vote);
-                    });
+                    var ref = new Firebase("https://geovoting.firebaseio.com");
+                    if (ref.getAuth() == null) {
+                        ref.authWithOAuthPopup("google", function (error, authData) {
+                            if (error) {
+                                console.log("Login Failed!", error);
+                            } else {
+                                console.log("Authenticated successfully with payload:", authData);
+                                this.saveVote();
+                            }
+                        });
+                    } else {
+                        this.saveVote()
+                    }
                 }
 
+            },
+            saveVote: function () {
+                var selected = this.$.questionnaire.$.optionsRadioGroup.selected;
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var ref = new Firebase('https://geovoting.firebaseio.com/questions/how%20old/' + selected);
+                    var vote = {};
+                    vote.lat = -20 + Math.random() * 80;
+                    vote.lon = -140 + Math.random() * 300;
+                    vote.userUid = ref.getAuth().uid;
+//                        vote.lat = position.coords.latitude;
+//                        vote.lon = position.coords.longitude;
+                    //todo uncomment for production
+                    ref.push(vote);
+                });
             }
         });
     })();
