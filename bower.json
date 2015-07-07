@@ -10,7 +10,10 @@
     "firebase-element": "GoogleWebComponents/firebase-element#1.0.1",
     "neon-elements": "PolymerElements/neon-elements#1.0.0",
     "geo-location": "ebidel/geo-location",
-    "page": "visionmedia/page.js#~1.6.3"
+    "page": "visionmedia/page.js#~1.6.3",
+    "google-apis": "GoogleWebComponents/google-apis#^1.0.0",
+    "jquery": "~2.1.4",
+    "firebase": ""
   },
   "devDependencies": {
     "web-component-tester": "*",

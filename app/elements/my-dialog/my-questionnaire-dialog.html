@@ -60,47 +60,74 @@
 
                 </paper-button>
             </div>
-
+            <google-js-api></google-js-api>
         </paper-dialog>
     </template>
 
 </dom-module>
-<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 <script>
     (function () {
         Polymer({
             is: 'my-questionnaire-dialog',
-            authAndVote: function (e) {
-                if (navigator.geolocation) {
-                    var ref = new Firebase("https://geovoting.firebaseio.com");
-                    if (ref.getAuth() == null) {
-                        ref.authWithOAuthPopup("google", function (error, authData) {
-                            if (error) {
-                                console.log("Login Failed!", error);
-                            } else {
-                                console.log("Authenticated successfully with payload:", authData);
-                                this.saveVote();
+            authAndVote: function () {
+                var firebase = new Firebase('https://geovoting.firebaseio.com/');
+                var selected = this.$.questionnaire.$.optionsRadioGroup.selected;
+
+                function saveUserInfo() {
+                    $.get("https://www.googleapis.com/plus/v1/people/me?access_token=" +
+                            firebase.getAuth().google.accessToken,
+                            function (googleUser) {
+                                const user = {
+                                    name: googleUser.displayName
+                                };
+
+                                if (googleUser.ageRange != null) {
+                                    user.ageRange = googleUser.ageRange;
+                                }
+                                if (googleUser.gender != null) {
+                                    user.gender = googleUser.gender;
+                                }
+                                if (googleUser.language != null) {
+                                    user.language = googleUser.language;
+                                }
+
+                                firebase.child('users').child(firebase.getAuth().uid)
+                                        .set(user);
                             }
-                        });
-                    } else {
-                        this.saveVote()
-                    }
+                    );
                 }
 
-            },
-            saveVote: function () {
-                var selected = this.$.questionnaire.$.optionsRadioGroup.selected;
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    var ref = new Firebase('https://geovoting.firebaseio.com/questions/how%20old/' + selected);
-                    var vote = {};
-                    vote.lat = -20 + Math.random() * 80;
-                    vote.lon = -140 + Math.random() * 300;
-                    vote.userUid = ref.getAuth().uid;
+                function vote() {
+                    navigator.geolocation.getCurrentPosition(function (position) {
 //                        vote.lat = position.coords.latitude;
 //                        vote.lon = position.coords.longitude;
-                    //todo uncomment for production
-                    ref.push(vote);
-                });
+                        //todo uncomment for production
+                        firebase.child('questions').child('how old').child(selected)
+                                .push({
+                                    lat: -20 + Math.random() * 80,
+                                    lon: -140 + Math.random() * 300,
+                                    userUid: firebase.getAuth().uid
+                                });
+                    });
+                }
+
+                if (navigator.geolocation) {
+                    if (firebase.getAuth() == null) {
+                        firebase.authWithOAuthPopup("google",
+                                function (error, authData) {
+                                    if (error) {
+                                        console.log("Login Failed!", error);
+                                    } else {
+                                        saveUserInfo();
+                                        vote();
+                                    }
+                                }, {
+                                    scope: "profile,https://www.googleapis.com/auth/plus.login"
+                                });
+                    } else {
+                        vote();
+                    }
+                }
             }
         });
     })();
