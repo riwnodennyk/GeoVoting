@@ -5,22 +5,30 @@
     <!--}-->
     <!--</style>-->
     <template>
+        <!--<google-map-marker is="answers-map-marker"></google-map-marker>-->
         <!--<geo-location latitude="{{user-lat}}" longitude="{{user-lon}}"></geo-location>-->
-        <google-map latitude="40" longitude="0" zoom="2"
-                    >
+        <google-map latitude="40" longitude="0" zoom="2">
             <firebase-collection
                     location="https://geovoting.firebaseio.com/questions/how%20old"
                     data="{{responses}}"></firebase-collection>
             <template is="dom-repeat" items="{{responses}}" as="response" index-as="responseIndex">
-                <template is="dom-repeat" items="{{arrayify(response)}}" as="user">
+                <template is="dom-repeat" items="{{arrayify(response)}}" as="vote">
+                    <!--<google-map-marker is="answers-map-marker"></google-map-marker>-->
+
                     <google-map-marker
-                            latitude="{{user.lat}}"
-                            longitude="{{user.lon}}"
+                            latitude="{{vote.lat}}"
+                            longitude="{{vote.lon}}"
                             draggable="true"
-                            icon='{{  pinSymbol(responses.length,responseIndex)  }}'
-                            >
-                        <!--pinSymbol("#f0f")-->
-                        <span>{{response.__firebaseKey__}}</span>
+                            icon='{{  pinSymbol(responses.length,responseIndex)  }}'>
+                        <firebase-document
+                                location="https://geovoting.firebaseio.com/users/google%3A114983829749817614613"
+                                data="{{userData}}"></firebase-document>
+                        <span>{{userData.name}}</span>
+                        <br/><span>Gender: </span><span>{{userData.gender}}</span>
+                        <br/><span>Language: </span><span>{{userData.language}}</span>
+                        <template is="dom-repeat" items="{{arrayify(userData)}}" >
+                            <!-- Don't know why. But this template is needed for visualizing the userData above-->
+                        </template>
                     </google-map-marker>
                 </template>
             </template>
