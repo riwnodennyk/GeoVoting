@@ -1,0 +1,156 @@
+<dom-module id="create-question-dialog">
+    <!--<style>-->
+    <!--:host {-->
+    <!--display: block;-->
+    <!--}-->
+    <!--</style>-->
+
+    <!--<geo-location latitude="{{lat}}"-->
+    <!--longitude="{{lng}}"></geo-location>-->
+    <template>
+        <paper-dialog id="dialog" role="dialog" tabindex="-1" aria-modal="false" with-backdrop=""
+                      entry-animation="scale-up-animation" exit-animation="fade-out-animation"
+                      class="x-scope paper-dialog-0" aria-labelledby="paper-dialog-header-210"
+                      style="
+                      outline: none; box-sizing: border-box; position: fixed; z-index: 12; max-width: 536px
+
+                      ">
+
+            <h2 id="paper-dialog-header-210">New question</h2>
+
+            <paper-input id="questionName" error-message="Invalid input!" label="Question"></paper-input>
+
+
+            <paper-dialog-scrollable>
+                <h2>Answers</h2>
+
+                <div id="answersList">
+                    <paper-input></paper-input>
+                    <paper-input></paper-input>
+                    <paper-input></paper-input>
+                </div>
+            </paper-dialog-scrollable>
+
+            <!--<p>-->
+            <!--<my-questionnaire id="questionnaire"></my-questionnaire>-->
+            <!--</p>-->
+
+            <div class="buttons">
+                <paper-button role="button" tabindex="0" aria-disabled="false"
+                              class="x-scope paper-button-0" on-click="moreAnswers">
+
+                    <paper-ripple class="style-scope paper-button">
+                        <div id="background" class="style-scope paper-ripple"
+                             style="opacity: 0.00121440000002621;"></div>
+                        <div id="waves" class="style-scope paper-ripple"></div>
+                    </paper-ripple>
+
+                    <paper-material animated=""
+                                    class="content  style-scope paper-button x-scope paper-material-0"
+                                    elevation="0">
+
+                        More
+
+                    </paper-material>
+
+                </paper-button>
+                <paper-button dialog-confirm="" role="button" tabindex="0"
+                              aria-disabled="false"
+                              class="x-scope paper-button-0" on-click="authAndCreateQuestion">
+
+
+                    <paper-ripple class="style-scope paper-button">
+                        <div id="background" class="style-scope paper-ripple"
+                             style="opacity: 0.0099664000001212;"></div>
+                        <div id="waves" class="style-scope paper-ripple"></div>
+                    </paper-ripple>
+
+                    <paper-material animated=""
+                                    class="content  style-scope paper-button x-scope paper-material-0"
+                                    elevation="0">
+                        <iron-icon icon="check"></iron-icon>
+
+                        Create
+
+                    </paper-material>
+
+                </paper-button>
+            </div>
+        </paper-dialog>
+    </template>
+
+</dom-module>
+<script>
+    (function () {
+        Polymer({
+            is: 'create-question-dialog',
+            moreAnswers: function () {
+                var dynamicEl = document.createElement("paper-input");
+                this.$.answersList.appendChild(dynamicEl);
+//                var overlay = this.$.dialog.$.overlay;
+//                overlay.discoverDimensions();
+//                overlay.dimensions.position.v = null;
+//                overlay.dimensions.position.h = null;
+//                overlay.repositionTarget();
+//                this.$.dialog.discoverDimensions();
+//                this.$.dialog.dimensions.position.v = null;
+//                this.$.dialog.dimensions.position.h = null;
+//                this.$.dialog.repositionTarget();
+            },
+            authAndCreateQuestion: function () {
+                var firebase = new Firebase('https://geovoting.firebaseio.com/');
+                var title = this.$.questionName.value;
+//                var selected = this.$.questionnaire.$.optionsRadioGroup.selected;
+
+                function saveUserInfo() {
+                    $.get("https://www.googleapis.com/plus/v1/people/me?access_token=" +
+                            firebase.getAuth().google.accessToken,
+                            function (googleUser) {
+                                const user = {
+                                    name: googleUser.displayName
+                                };
+
+                                if (googleUser.ageRange != null) {
+                                    user.ageRange = googleUser.ageRange;
+                                }
+                                if (googleUser.gender != null) {
+                                    user.gender = googleUser.gender;
+                                }
+                                if (googleUser.language != null) {
+                                    user.language = googleUser.language;
+                                }
+
+                                firebase.child('users').child(firebase.getAuth().uid)
+                                        .set(user);
+                            }
+                    );
+                }
+
+                function createQuestion() {
+                    firebase.child('questions')
+                            .push({
+                                title: title,
+                                answers: {yes: 0, no: 0}
+                            });
+                }
+
+                //todo reuse the code
+                if (firebase.getAuth() == null) {
+                    firebase.authWithOAuthPopup("google",
+                            function (error, authData) {
+                                if (error) {
+                                    console.log("Login Failed!", error);
+                                } else {
+                                    saveUserInfo();
+                                    createQuestion();
+                                }
+                            }, {
+                                scope: "profile,https://www.googleapis.com/auth/plus.login"
+                            });
+                } else {
+                    createQuestion();
+                }
+            }
+        });
+    })();
+</script>

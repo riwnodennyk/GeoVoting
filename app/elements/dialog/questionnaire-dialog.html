@@ -1,4 +1,4 @@
-<dom-module id="my-questionnaire-dialog">
+<dom-module id="questionnaire-dialog">
     <!--<style>-->
     <!--:host {-->
     <!--display: block;-->
@@ -60,7 +60,6 @@
 
                 </paper-button>
             </div>
-            <google-js-api></google-js-api>
         </paper-dialog>
     </template>
 
@@ -68,8 +67,8 @@
 <script>
     (function () {
         Polymer({
-            is: 'my-questionnaire-dialog',
-            authAndVote: function () {
+            is: 'questionnaire-dialog',
+            authAndCreateQuestion: function () {
                 var firebase = new Firebase('https://geovoting.firebaseio.com/');
                 var selected = this.$.questionnaire.$.optionsRadioGroup.selected;
 
@@ -102,7 +101,7 @@
 //                        vote.lat = position.coords.latitude;
 //                        vote.lon = position.coords.longitude;
                         //todo uncomment for production
-                        firebase.child('questions').child('how old').child(selected)
+                        firebase.child('questions').child('how old').child('answers').child(selected)
                                 .push({
                                     lat: -20 + Math.random() * 80,
                                     lon: -140 + Math.random() * 300,

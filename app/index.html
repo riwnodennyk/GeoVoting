@@ -115,7 +115,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <paper-material elevation="1">
                             <answers-map></answers-map>
 
-                            <paper-button onclick="document.getElementById('survey').$.dialogg.open();"
+                            <paper-button onclick="document.getElementById('questionnaire').$.dialogg.open();"
                                           role="button" tabindex="0"
                                           aria-disabled="false" class="x-scope paper-button-0">
 
@@ -130,7 +130,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                                                 elevation="2">
                                     Add my response
                                 </paper-material>
+                            </paper-button>
 
+                            <paper-button onclick="document.getElementById('create-question').$.dialog.open();"
+                                          role="button" tabindex="0"
+                                          aria-disabled="false" class="x-scope paper-button-0">
+
+                                <paper-ripple class="style-scope paper-button">
+                                    <div id="background" class="style-scope paper-ripple"
+                                         style="opacity: 0.006360000000149;"></div>
+                                    <div id="waves" class="style-scope paper-ripple"></div>
+                                </paper-ripple>
+
+                                <paper-material animated=""
+                                                class="content  style-scope paper-button x-scope paper-material-0"
+                                                elevation="2">
+                                    Create question
+                                </paper-material>
                             </paper-button>
                             <p class="paper-font-subhead">You now have:</p>
                             <my-list></my-list>
@@ -215,7 +231,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-header-panel>
     </paper-drawer-panel>
 
-    <my-questionnaire-dialog id="survey"></my-questionnaire-dialog>
+    <questionnaire-dialog id="questionnaire"></questionnaire-dialog>
+    <create-question-dialog id="create-question"></create-question-dialog>
 </template>
 
 <!-- build:js scripts/app.js -->

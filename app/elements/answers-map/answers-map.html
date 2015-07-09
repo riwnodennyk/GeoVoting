@@ -9,12 +9,10 @@
         <!--<geo-location latitude="{{user-lat}}" longitude="{{user-lon}}"></geo-location>-->
         <google-map latitude="40" longitude="0" zoom="2">
             <firebase-collection
-                    location="https://geovoting.firebaseio.com/questions/how%20old"
+                    location="https://geovoting.firebaseio.com/questions/how%20old/answers"
                     data="{{responses}}"></firebase-collection>
             <template is="dom-repeat" items="{{responses}}" as="response" index-as="responseIndex">
                 <template is="dom-repeat" items="{{arrayify(response)}}" as="vote">
-                    <!--<google-map-marker is="answers-map-marker"></google-map-marker>-->
-
                     <google-map-marker
                             latitude="{{vote.lat}}"
                             longitude="{{vote.lon}}"
@@ -63,7 +61,6 @@
                 }
                 return r;
             },
-
             hsvToRgb: function (h, s, v) {
                 var r, g, b;
                 var i;
